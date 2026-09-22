@@ -164,7 +164,7 @@ def kontrol_g4(con, satirlar):
         kaydet("Görev 4", 0, 25, "sql/g4_sorgular.sql bulunamadı.")
         return
 
-    parcalar = re.split(r"--\s*Soru\s*4\.(\d)", sql)
+    parcalar = re.split(r"--\s*Soru\s*4\.(\d)[^\n]*", sql)
     sorgular = {}
     for i in range(1, len(parcalar) - 1, 2):
         sorgular[int(parcalar[i])] = parcalar[i + 1].strip()
