@@ -38,7 +38,13 @@ def oku(yol):
     p = KOK / yol
     if not p.exists():
         return None
-    return p.read_text(encoding="utf-8", errors="replace")
+    ham = p.read_bytes()
+    # Windows'ta PowerShell'in ">" yonlendirmesi UTF-16 yazar; Not Defteri de
+    # UTF-8'e BOM ekler. Bunlari cozmezsek ogrencinin dogru cikti dosyasi
+    # taninmaz ve haksiz puan kaybi olur.
+    if ham[:2] in (b"\xff\xfe", b"\xfe\xff"):
+        return ham.decode("utf-16", errors="replace")
+    return ham.decode("utf-8-sig", errors="replace")
 
 
 def baglanti():
