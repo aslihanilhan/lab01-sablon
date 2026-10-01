@@ -46,6 +46,16 @@ def oku(yol):
         return ham.decode("utf-16", errors="replace")
     return ham.decode("utf-8-sig", errors="replace")
 
+def sql_kodu(metin):
+    """SQL metninden yorumlari atar.
+
+    Sablon dosyalarinin KENDI yorumlarinda "CREATE TABLE komutunuzu yazin"
+    gibi ifadeler gectigi icin, ham metinde anahtar kelime aramak bos teslimi
+    gecerli sayiyordu. Denetimler bu fonksiyonun ciktisi uzerinde yapilir.
+    """
+    metin = re.sub(r"/\*.*?\*/", " ", metin or "", flags=re.S)
+    return re.sub("--.*", " ", metin)
+
 
 def baglanti():
     return psycopg.connect(
@@ -81,7 +91,7 @@ def kontrol_g1():
 
 def kontrol_g2(con):
     sql = oku("sql/g2_ddl.sql")
-    if not sql or "CREATE" not in sql.upper():
+    if not sql or "CREATE" not in sql_kodu(sql).upper():
         kaydet("Görev 2", 0, 20, "sql/g2_ddl.sql bulunamadı veya CREATE TABLE içermiyor.")
         return False
     try:
@@ -95,6 +105,9 @@ def kontrol_g2(con):
         """SELECT column_name, data_type FROM information_schema.columns
            WHERE table_name = 'kitaplar'""").fetchall()}
     gerekli = {"kitap_id", "ad", "yazar", "yayin_yili", "sayfa", "tur"}
+    if not kolonlar:
+        kaydet("Görev 2", 0, 20, "kitaplar tablosu oluşmadı; dosyada çalışan bir CREATE TABLE yok.")
+        return False
     eksik = gerekli - set(kolonlar)
     if eksik:
         kaydet("Görev 2", 8, 20, f"Tablo oluştu ama eksik sütun(lar) var: {', '.join(sorted(eksik))}")
