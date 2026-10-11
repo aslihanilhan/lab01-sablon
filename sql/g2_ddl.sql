@@ -1,5 +1,9 @@
--- =====================================================
--- Föy 01 / Görev 2 — kitaplar tablosu (DDL)
--- CREATE TABLE komutunuzu bu dosyaya yazın.
--- Beklenen sütunlar için föydeki tabloya bakın.
--- =====================================================
+DROP TABLE IF EXISTS kitaplar;
+
+CREATE TABLE kitaplar (
+    id INT PRIMARY KEY,
+    baslik VARCHAR(255),
+    yazar VARCHAR(255),
+    yayin_yili INT,
+    fiyat NUMERIC(10, 2)
+);

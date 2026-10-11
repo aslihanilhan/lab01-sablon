@@ -1,5 +1,6 @@
--- =====================================================
--- Föy 01 / Görev 3 — CSV'den veri yükleme
--- COPY komutunuzu ve doğrulama sorgusunu bu dosyaya yazın.
--- Doğrulama sorgusunun çıktısını sonuc/g3.txt dosyasına kaydedin.
--- =====================================================
+TRUNCATE TABLE kitaplar;
+
+COPY kitaplar(id, baslik, yazar, yayin_yili, fiyat, tur)
+FROM '/kitaplar.csv'
+DELIMITER ','
+CSV HEADER;
