@@ -1,1 +1,5 @@
-Lab 01 Kurulumu Tamamlandi
+PostgreSQL 16.0 on x86_64-pc-linux-gnu, compiled by gcc (GCC) 12.2.1 20220924, 64-bit
+Host: localhost
+Port: 5432
+Database: vtysdb
+User: vtys
