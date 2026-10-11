@@ -5,7 +5,6 @@ CREATE TABLE kitaplar (
     ad VARCHAR(255),
     yazar VARCHAR(255),
     yayin_yili INT,
-    fiyat NUMERIC(10, 2),
     sayfa INT,
     tur VARCHAR(100)
 );
